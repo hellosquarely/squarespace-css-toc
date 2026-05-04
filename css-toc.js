@@ -281,23 +281,24 @@
       this.renderList();
     }
 
-    jumpTo(idx) {
-      if (!this.cm) return;
-      const s = this.sections[idx];
-      if (!s) return;
+   jumpTo(idx) {
+  if (!this.cm) return;
+  const s = this.sections[idx];
+  if (!s) return;
 
-      const pos = { line: s.line, ch: s.ch };
-      try {
-        this.cm.focus();
-        this.cm.setCursor(pos);
-        // Center the line in the viewport
-        const margin = Math.floor((this.cm.getScrollInfo().clientHeight || 400) / 2);
-        this.cm.scrollIntoView({ line: s.line, ch: 0 }, margin);
-      } catch (e) {}
+  const pos = { line: s.line, ch: s.ch };
+  try {
+    this.cm.focus();
+    this.cm.setCursor(pos);
+    // Pin section to the top of the viewport
+    const scrollInfo = this.cm.getScrollInfo();
+    const coords = this.cm.charCoords({ line: s.line, ch: 0 }, "local");
+    this.cm.scrollTo(null, coords.top - 10);
+  } catch (e) {}
 
-      this.activeIndex = idx;
-      this.updateActiveStyles();
-    }
+  this.activeIndex = idx;
+  this.updateActiveStyles();
+}
 
     updateActiveFromCursor() {
       if (!this.cm || !this.sections.length) {
