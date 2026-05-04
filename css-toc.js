@@ -29,11 +29,23 @@
 
     init() {
       try {
+        this.injectStylesheet();
         this.startWatchingParentLocation();
         this.handleLocationChange(this.win.location.pathname);
       } catch (e) {
         console.warn("CssToc init failed:", e);
       }
+    }
+
+    injectStylesheet() {
+      const head = this.doc.head || this.doc.getElementsByTagName("head")[0];
+      if (!head) return;
+      if (this.doc.getElementById("css-toc-stylesheet")) return;
+      const link = this.doc.createElement("link");
+      link.id = "css-toc-stylesheet";
+      link.rel = "stylesheet";
+      link.href = "https://cdn.jsdelivr.net/gh/hellosquarely/squarespace-css-toc@main/css-toc.css";
+      head.appendChild(link);
     }
 
     startWatchingParentLocation() {
