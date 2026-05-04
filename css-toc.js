@@ -344,8 +344,12 @@
     }
   }
 
-  // Only run inside the Squarespace admin iframe
-  if (window.top !== window.self) {
+  // Initialize. Works whether script is loaded in admin window directly
+  // or inside the site preview iframe. Safe to run anywhere because
+  // the script only acts when the CSS panel CodeMirror element is found.
+  try {
     new CssToc().init();
+  } catch (e) {
+    console.warn("CssToc failed to start:", e);
   }
 }();
