@@ -273,3 +273,14 @@
   color: #9b9b9b;
   flex-shrink: 0;
 }
+
+.css-toc-credit a {
+  color: #9b9b9b;
+  text-decoration: none;
+  transition: color 0.12s ease;
+}
+
+.css-toc-credit a:hover {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
